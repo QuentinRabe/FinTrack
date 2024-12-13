@@ -15,7 +15,7 @@ import { ref } from "vue";
 
 const { title } = defineProps({
   title: String,
-  state: Boolean
+  state: Boolean,
 });
 const isActive = ref(false);
 const toggleActive = () => {

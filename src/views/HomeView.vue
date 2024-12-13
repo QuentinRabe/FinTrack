@@ -1,7 +1,9 @@
 <template>
   <div class="bg-white w-full h-screen flex px-10 py-5 gap-5">
     <div class="w-[70%] h-[100%] flex flex-col gap-5">
-      <div class="w-[100%] h-[60%] px-3 py-2 text-lg border rounded-lg">
+      <div
+        class="w-[100%] h-[60%] px-3 py-2 text-lg border rounded-lg flex flex-col"
+      >
         <div class="flex justify-between items-center h-[50px]">
           <TitleComponent title="Monthly Details" />
           <div class="flex gap-10">
@@ -14,6 +16,7 @@
             />
           </div>
         </div>
+        <GraphicBarComponent />
       </div>
       <div class="bg-green-300 w-[100%] h-[40%]"></div>
     </div>
@@ -24,6 +27,7 @@
 <script setup>
 import TitleComponent from "@/components/TitleComponent.vue";
 import SwitchButtonComponent from "@/components/SwitchButtonComponent.vue";
+import GraphicBarComponent from "@/components/GraphicBarComponent.vue";
 import { useFinanceStore } from "@/stores/store";
 
 const store = useFinanceStore();
