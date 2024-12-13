@@ -16,7 +16,19 @@
             />
           </div>
         </div>
-        <GraphicBarComponent />
+        <TransitionGroup>
+          <GraphicBarComponent
+            v-for="(switchBtn, index) in store.switches"
+            v-show="switchBtn.name === store.activeBar"
+            :monthData="
+              switchBtn.name === 'Income'
+                ? store.monthlyIncome
+                : store.monthlyExpenses
+            "
+            :months="store.months"
+            :key="index"
+          />
+        </TransitionGroup>
       </div>
       <div class="bg-green-300 w-[100%] h-[40%]"></div>
     </div>
@@ -32,4 +44,20 @@ import { useFinanceStore } from "@/stores/store";
 
 const store = useFinanceStore();
 </script>
-<style scoped></style>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s linear;
+}
+.fade-enter-to,
+.fade-leave-from {
+  transform: scale(1);
+  opacity: 1;
+}
+.fade-enter-from,
+.fade-leave-to {
+  transform: scale(0);
+  opacity: 0;
+}
+</style>

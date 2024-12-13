@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full h-[90%] flex justify-center">
-    <Bar :data="chartData" />
+  <div class="w-full h-[90%] max-h-[300px] flex justify-center">
+    <Bar :data="chartData" :options="chartOptions"/>
   </div>
 </template>
 
@@ -14,8 +14,8 @@ import {
   BarElement,
   CategoryScale,
   LinearScale,
+  elements,
 } from "chart.js";
-import { useFinanceStore } from "@/stores/store";
 ChartJS.register(
   Title,
   Tooltip,
@@ -24,13 +24,16 @@ ChartJS.register(
   CategoryScale,
   LinearScale
 );
-const store = useFinanceStore();
+const { monthData, months } = defineProps({
+  monthData: Array,
+  months: Array,
+});
 const chartData = {
-  labels: store.months,
+  labels: months,
   datasets: [
     {
       label: "Income",
-      data: store.monthlyIncome,
+      data: monthData,
       backgroundColor: [
         "rgba(255, 99, 132, 0.2)",
         "rgba(255, 159, 64, 0.2)",
@@ -52,5 +55,14 @@ const chartData = {
       borderWidth: 1,
     },
   ],
+};
+const chartOptions = {
+  animation: {
+    duration: 1000, // Durée de l'animation en millisecondes
+    easing: 'easeInOutBounce', // Type d'animation
+    onComplete: () => {
+      console.log('Animation terminée');
+    },
+  },
 };
 </script>
