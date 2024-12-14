@@ -1,10 +1,10 @@
 <template>
   <div class="bg-white w-full h-screen flex px-10 py-5 gap-5">
-    <div class="w-[70%] h-[100%] flex flex-col gap-5">
+    <div class="w-[70%] h-full flex flex-col gap-5">
       <div
-        class="w-[100%] h-[60%] px-3 py-2 text-lg border rounded-lg flex flex-col"
+        class="w-full h-[70%] px-3 py-2 text-lg border rounded-lg flex flex-col"
       >
-        <div class="flex justify-between items-center h-[50px]">
+        <div class="flex justify-between items-center h-[10%]">
           <TitleComponent title="Monthly Details" />
           <div class="flex gap-10">
             <SwitchButtonComponent
@@ -16,23 +16,31 @@
             />
           </div>
         </div>
-        <TransitionGroup>
-          <GraphicBarComponent
-            v-for="(switchBtn, index) in store.switches"
-            v-show="switchBtn.name === store.activeBar"
-            :monthData="
-              switchBtn.name === 'Income'
-                ? store.monthlyIncome
-                : store.monthlyExpenses
-            "
-            :months="store.months"
-            :key="index"
-          />
-        </TransitionGroup>
+        <div class="w-full h-[90%] flex justify-center">
+          <template v-if="store.activeBar">
+            <transition name="fade">
+              <GraphicBarComponent
+                :key="store.activeBar"
+                :monthData="
+                  store.activeBar === 'Income'
+                    ? store.monthlyIncome
+                    : store.monthlyExpenses
+                "
+                :bgColor="
+                  store.activeBar === 'Income'
+                    ? store.incomesColors
+                    : store.expensesColors
+                "
+              />
+            </transition>
+          </template>
+        </div>
       </div>
-      <div class="bg-green-300 w-[100%] h-[40%]"></div>
+      <div class="w-full h-[30%] px-3 py-2 text-lg border rounded-lg">
+        <TitleComponent title="Expense Summary" />
+      </div>
     </div>
-    <div class="bg-green-300 w-[30%] h-[100%]"></div>
+    <div class="bg-green-300 w-[30%] h-full"></div>
   </div>
 </template>
 
@@ -48,16 +56,20 @@ const store = useFinanceStore();
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.5s linear;
+  transition: all 0.5s ease;
 }
+
 .fade-enter-to,
 .fade-leave-from {
   transform: scale(1);
   opacity: 1;
+  display: block;
 }
+
 .fade-enter-from,
-.fade-leave-to {
+.fade-leave-to /* .fade-leave-active in <2.1.8 */ {
   transform: scale(0);
   opacity: 0;
+  display: none;
 }
 </style>

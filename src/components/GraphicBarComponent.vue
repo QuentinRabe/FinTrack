@@ -1,10 +1,9 @@
 <template>
-  <div class="w-full h-[90%] max-h-[300px] flex justify-center">
-    <Bar :data="chartData" :options="chartOptions"/>
-  </div>
+  <Bar :data="chartData" :options="chartOptions" />
 </template>
 
 <script setup>
+import { onMounted, onUnmounted } from "vue";
 import { Bar } from "vue-chartjs";
 import {
   Chart as ChartJS,
@@ -16,6 +15,7 @@ import {
   LinearScale,
   elements,
 } from "chart.js";
+import { useFinanceStore } from "@/stores/store";
 ChartJS.register(
   Title,
   Tooltip,
@@ -24,45 +24,42 @@ ChartJS.register(
   CategoryScale,
   LinearScale
 );
-const { monthData, months } = defineProps({
+const store = useFinanceStore();
+const { monthData, bgColor } = defineProps({
   monthData: Array,
-  months: Array,
+  bgColor: Array,
 });
 const chartData = {
-  labels: months,
+  labels: store.monthsRegister(store.activeBar),
   datasets: [
     {
-      label: "Income",
+      label: store.activeBar,
       data: monthData,
-      backgroundColor: [
-        "rgba(255, 99, 132, 0.2)",
-        "rgba(255, 159, 64, 0.2)",
-        "rgba(255, 205, 86, 0.2)",
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(201, 203, 207, 0.2)",
-      ],
-      borderColor: [
-        "rgb(255, 99, 132)",
-        "rgb(255, 159, 64)",
-        "rgb(255, 205, 86)",
-        "rgb(75, 192, 192)",
-        "rgb(54, 162, 235)",
-        "rgb(153, 102, 255)",
-        "rgb(201, 203, 207)",
-      ],
-      borderWidth: 1,
+      backgroundColor: bgColor,
     },
   ],
 };
 const chartOptions = {
-  animation: {
-    duration: 1000, // Durée de l'animation en millisecondes
-    easing: 'easeInOutBounce', // Type d'animation
-    onComplete: () => {
-      console.log('Animation terminée');
+  // animation: {
+  //   duration: 1000, // Durée de l'animation en millisecondes
+  //   easing: 'easeInOutBounce', // Type d'animation
+  //   onComplete: () => {
+  //     console.log('Animation terminée');
+  //   },
+  // },
+  elements: {
+    bar: {
+      borderRadius: 10,
     },
   },
 };
+// onMounted(() => {
+//   console.log("GraphicBarComponent monté");
+//   // Ajoutez ici toute logique que vous souhaitez exécuter lors du montage
+// });
+
+// onUnmounted(() => {
+//   console.log("GraphicBarComponent démonté");
+//   // Ajoutez ici toute logique que vous souhaitez exécuter lors du démontage
+// });
 </script>
