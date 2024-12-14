@@ -1,5 +1,5 @@
 <template>
-  <Doughnut :data="data" />
+  <Doughnut :data="data" :options="chartOptions" class="w-full h-full"/>
 </template>
 
 <script setup>
@@ -30,4 +30,13 @@ const { arrayData } = defineProps({
 onMounted(() => {
   console.log("Mounted" + arrayData);
 });
+const chartOptions = {
+  animation: {
+    duration: 1000, // Durée de l'animation en millisecondes
+    easing: 'easeInOutBounce', // Type d'animation
+    onComplete: () => {
+      console.log('Animation terminée');
+    },
+  },
+};
 </script>
