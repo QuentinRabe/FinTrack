@@ -1,8 +1,8 @@
 <template>
   <div class="bg-white w-full h-screen flex px-10 py-5 gap-5">
-    <div class="w-[70%] h-full flex flex-col gap-5">
+    <div class="flex flex-col gap-5 w-[70%] h-full">
       <div
-        class="w-full h-[70%] px-3 py-2 text-lg border rounded-lg flex flex-col"
+        class="w-full h-full px-3 py-2 text-lg border rounded-lg flex flex-col"
       >
         <div class="flex justify-between items-center h-[10%]">
           <TitleComponent title="Monthly Details" />
@@ -16,7 +16,7 @@
             />
           </div>
         </div>
-        <div class="w-full h-[90%] flex justify-center">
+        <div class="w-full h-[90%] relative top-1/2 -translate-y-1/2">
           <template v-if="store.activeBar">
             <transition name="fade">
               <GraphicBarComponent
@@ -36,11 +36,21 @@
           </template>
         </div>
       </div>
-      <div class="w-full h-[30%] px-3 py-2 text-lg border rounded-lg">
-        <TitleComponent title="Expense Summary" />
+    </div>
+    <div class="w-[30%] h-full px-3 py-2 text-lg border rounded-lg flex flex-col justify-end">
+      <div class="w-full h-[30%] flex flex-col gap-1 ">
+        <div class="w-full h-[20%] flex justify-between items-center">
+          <TitleComponent title="Expense Summary" />
+          <OptGroupComponent :months="store.months" />
+        </div>
+        <div class="w-full h-[80%]">
+          <GraphicDoughnutComponent
+            :arrayData="store.expenseSummaryArray"
+            :key="store.monthSelected"
+          />
+        </div>
       </div>
     </div>
-    <div class="bg-green-300 w-[30%] h-full"></div>
   </div>
 </template>
 
@@ -49,7 +59,8 @@ import TitleComponent from "@/components/TitleComponent.vue";
 import SwitchButtonComponent from "@/components/SwitchButtonComponent.vue";
 import GraphicBarComponent from "@/components/GraphicBarComponent.vue";
 import { useFinanceStore } from "@/stores/store";
-
+import GraphicDoughnutComponent from "@/components/GraphicDoughnutComponent.vue";
+import OptGroupComponent from "@/components/OptGroupComponent.vue";
 const store = useFinanceStore();
 </script>
 
@@ -61,14 +72,14 @@ const store = useFinanceStore();
 
 .fade-enter-to,
 .fade-leave-from {
-  transform: scale(1);
+  /* transform: scale(1); */
   opacity: 1;
   display: block;
 }
 
 .fade-enter-from,
 .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
-  transform: scale(0);
+  /* transform: scale(0); */
   opacity: 0;
   display: none;
 }

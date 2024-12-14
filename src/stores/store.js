@@ -7,7 +7,23 @@ export const useFinanceStore = defineStore("finance", () => {
     { name: "Expenses", state: false },
   ]);
   const activeBar = ref("Income");
+  const monthSelected = ref("Dec");
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+ const expenseSummary = ref([
+   { id: "Jan", travel: 200, food: 800, rent: 900, other: 250 },
+   { id: "Feb", travel: 220, food: 850, rent: 900, other: 270 },
+   { id: "Mar", travel: 180, food: 950, rent: 910, other: 260 },
+   { id: "Apr", travel: 210, food: 1000, rent: 920, other: 280 },
+   { id: "May", travel: 190, food: 1100, rent: 930, other: 300 },
+   { id: "June", travel: 230, food: 1050, rent: 940, other: 320 },
+   { id: "July", travel: 250, food: 900, rent: 950, other: 310 },
+   { id: "Aug", travel: 220, food: 870, rent: 960, other: 330 },
+   { id: "Sept", travel: 240, food: 950, rent: 970, other: 340 },
+   { id: "Oct", travel: 210, food: 1000, rent: 980, other: 350 },
+   { id: "Nov", travel: 260, food: 900, rent: 990, other: 360 },
+   { id: "Dec", travel: 280, food: 1000, rent: 1000, other: 370 },
+ ]);
+
   const monthlyIncome = [5000, 2500, 4000, 6000, 3750, 2600, 1400, 5900, 1200, 1300];
   const monthlyExpenses = [1000, 1500, 3000, 5000, 2050];
   const incomesColors = [
@@ -54,6 +70,11 @@ export const useFinanceStore = defineStore("finance", () => {
       return ([...months].splice(0, monthlyIncome.length));
     else
       return ([...months].slice(0, monthlyExpenses.length));
+  });
+  const expenseSummaryArray = computed(() => {
+    const obj = [...expenseSummary.value].find((m) => m.id === monthSelected.value);
+    const array = [obj.travel, obj.food, obj.rent, obj.other];
+    return (array);
   })
   return {
     switches,
@@ -65,5 +86,8 @@ export const useFinanceStore = defineStore("finance", () => {
     incomesColors,
     expensesColors,
     monthsRegister,
+    monthSelected,
+    expenseSummary,
+    expenseSummaryArray,
   };
 });

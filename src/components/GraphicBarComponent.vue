@@ -15,7 +15,6 @@ import {
   LinearScale,
   elements,
 } from "chart.js";
-import { useFinanceStore } from "@/stores/store";
 ChartJS.register(
   Title,
   Tooltip,
@@ -24,6 +23,7 @@ ChartJS.register(
   CategoryScale,
   LinearScale
 );
+import { useFinanceStore } from "@/stores/store";
 const store = useFinanceStore();
 const { monthData, bgColor } = defineProps({
   monthData: Array,
@@ -40,13 +40,13 @@ const chartData = {
   ],
 };
 const chartOptions = {
-  // animation: {
-  //   duration: 1000, // Durée de l'animation en millisecondes
-  //   easing: 'easeInOutBounce', // Type d'animation
-  //   onComplete: () => {
-  //     console.log('Animation terminée');
-  //   },
-  // },
+  animation: {
+    duration: 1000, // Durée de l'animation en millisecondes
+    easing: 'easeInOutBounce', // Type d'animation
+    onComplete: () => {
+      console.log('Animation terminée');
+    },
+  },
   elements: {
     bar: {
       borderRadius: 10,
