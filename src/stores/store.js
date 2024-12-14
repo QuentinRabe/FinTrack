@@ -8,6 +8,7 @@ export const useFinanceStore = defineStore("finance", () => {
   ]);
   const activeBar = ref("Income");
   const monthSelected = ref("Dec");
+  const currentExpenseSummarySum = ref();
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
  const expenseSummary = ref([
    { id: "Jan", travel: 200, food: 800, rent: 900, other: 250 },
@@ -74,6 +75,7 @@ export const useFinanceStore = defineStore("finance", () => {
   const expenseSummaryArray = computed(() => {
     const obj = [...expenseSummary.value].find((m) => m.id === monthSelected.value);
     const array = [obj.travel, obj.food, obj.rent, obj.other];
+    currentExpenseSummarySum.value = array.reduce((sum, currentValue) => sum + currentValue, 0);
     return (array);
   })
   return {
@@ -89,5 +91,6 @@ export const useFinanceStore = defineStore("finance", () => {
     monthSelected,
     expenseSummary,
     expenseSummaryArray,
+    currentExpenseSummarySum,
   };
 });
