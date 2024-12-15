@@ -9,51 +9,77 @@ export const useFinanceStore = defineStore("finance", () => {
   const activeBar = ref("Income");
   const monthSelected = ref("Dec");
   const currentExpenseSummarySum = ref();
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
- const expenseSummary = ref([
-   { id: "Jan", travel: 200, food: 800, rent: 900, other: 250 },
-   { id: "Feb", travel: 220, food: 850, rent: 900, other: 270 },
-   { id: "Mar", travel: 180, food: 950, rent: 910, other: 260 },
-   { id: "Apr", travel: 210, food: 1000, rent: 920, other: 280 },
-   { id: "May", travel: 190, food: 1100, rent: 930, other: 300 },
-   { id: "June", travel: 230, food: 1050, rent: 940, other: 320 },
-   { id: "July", travel: 250, food: 900, rent: 950, other: 310 },
-   { id: "Aug", travel: 220, food: 870, rent: 960, other: 330 },
-   { id: "Sept", travel: 240, food: 950, rent: 970, other: 340 },
-   { id: "Oct", travel: 210, food: 1000, rent: 980, other: 350 },
-   { id: "Nov", travel: 260, food: 900, rent: 990, other: 360 },
-   { id: "Dec", travel: 280, food: 1000, rent: 1000, other: 370 },
- ]);
-
-  const monthlyIncome = [5000, 2500, 4000, 6000, 3750, 2600, 1400, 5900, 1200, 1300];
-  const monthlyExpenses = [1000, 1500, 3000, 5000, 2050];
-  const incomesColors = [
-    "rgb(0, 123, 255)", // Bleu vif
-    "rgb(40, 167, 69)", // Vert émeraude
-    "rgb(23, 162, 184)", // Bleu sarcelle
-    "rgb(255, 193, 7)", // Jaune doré
-    "rgb(255, 87, 34)", // Orange vif
-    "rgb(102, 187, 106)", // Vert clair
-    "rgb(255, 152, 0)", // Orange pastel
-    "rgb(33, 150, 243)", // Bleu clair
-    "rgb(156, 39, 176)", // Violet intense
-    "rgb(0, 172, 193)", // Cyan foncé
-    "rgb(121, 85, 72)", // Brun clair
-    "rgb(63, 81, 181)", // Bleu roi
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "June",
+    "July",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
+  const expenseSummary = ref([
+    { id: "Jan", travel: 150, food: 600, rent: 1200, other: 300 },
+    { id: "Feb", travel: 160, food: 620, rent: 1200, other: 320 },
+    { id: "Mar", travel: 170, food: 650, rent: 1200, other: 350 },
+    { id: "Apr", travel: 180, food: 700, rent: 1200, other: 400 },
+    { id: "May", travel: 200, food: 750, rent: 1200, other: 420 },
+    { id: "June", travel: 220, food: 800, rent: 1200, other: 450 },
+    { id: "July", travel: 250, food: 850, rent: 1200, other: 470 },
+    { id: "Aug", travel: 240, food: 820, rent: 1200, other: 460 },
+    { id: "Sept", travel: 230, food: 780, rent: 1200, other: 440 },
+    { id: "Oct", travel: 200, food: 750, rent: 1200, other: 410 },
+    { id: "Nov", travel: 180, food: 700, rent: 1200, other: 380 },
+    { id: "Dec", travel: 250, food: 850, rent: 1200, other: 450 },
+  ]);
+
+  const monthlyIncome = ref([
+    4500, 4600, 4800, 4700, 5000, 5200, 5300, 5000, 4800, 4700, 4600, 4900,
+  ]);
+
+  const monthlyExpenses = ref([
+    2250, 2300, 2420, 2480, 2570, 2670, 2770, 2720, 2650, 2560, 2460, 2750,
+  ]);
+
+  const currentBalance = computed(() => {
+    return (
+      monthlyIncome.value.reduce((sum, curval) => sum + curval, 0) -
+      monthlyExpenses.value.reduce((sum, curval) => sum + curval, 0)
+    );
+  });
+  const incomesColors = [
+    "rgb(77, 182, 172)", // Vert menthe
+    "rgb(100, 181, 246)", // Bleu clair
+    "rgb(129, 212, 250)", // Bleu ciel
+    "rgb(255, 241, 118)", // Jaune pâle
+    "rgb(255, 204, 128)", // Orange clair
+    "rgb(174, 213, 129)", // Vert herbe
+    "rgb(255, 213, 79)", // Jaune doré
+    "rgb(121, 134, 203)", // Bleu lavande
+    "rgb(186, 104, 200)", // Violet orchidée
+    "rgb(144, 202, 249)", // Bleu bébé
+    "rgb(244, 143, 177)", // Rose pastel
+    "rgb(159, 168, 218)", // Bleu ardoise
+  ];
+
   const expensesColors = [
-    "rgb(244, 67, 54)", // Rouge vif
-    "rgb(233, 30, 99)", // Rose foncé
-    "rgb(255, 87, 34)", // Orange intense
-    "rgb(255, 138, 101)", // Orange pastel
-    "rgb(255, 202, 40)", // Jaune foncé
-    "rgb(156, 39, 176)", // Violet foncé
-    "rgb(121, 85, 72)", // Brun
-    "rgb(255, 112, 67)", // Orange corail
-    "rgb(229, 57, 53)", // Rouge profond
-    "rgb(198, 40, 40)", // Rouge sombre
-    "rgb(93, 64, 55)", // Marron cacao
-    "rgb(239, 83, 80)", // Rouge rosé
+    "rgb(255, 138, 128)", // Rouge corail
+    "rgb(244, 143, 177)", // Rose clair
+    "rgb(255, 171, 145)", // Orange pâle
+    "rgb(255, 204, 188)", // Saumon doux
+    "rgb(255, 245, 157)", // Jaune citron
+    "rgb(197, 202, 233)", // Violet doux
+    "rgb(161, 136, 127)", // Brun taupe
+    "rgb(255, 183, 77)", // Orange ambré
+    "rgb(239, 154, 154)", // Rouge clair
+    "rgb(179, 229, 252)", // Bleu pastel
+    "rgb(207, 216, 220)", // Gris clair
+    "rgb(255, 224, 178)", // Beige pastel
   ];
 
   const toggleActive = (button) => {
@@ -66,18 +92,22 @@ export const useFinanceStore = defineStore("finance", () => {
     }
     console.log(`Active bar =>> ${activeBar.value}`);
   };
-  const monthsRegister = ((value) => {
-    if (value === 'Income')
-      return ([...months].splice(0, monthlyIncome.length));
-    else
-      return ([...months].slice(0, monthlyExpenses.length));
-  });
+  const monthsRegister = (value) => {
+    if (value === "Income")
+      return [...months].splice(0, monthlyIncome.value.length);
+    else return [...months].slice(0, monthlyExpenses.value.length);
+  };
   const expenseSummaryArray = computed(() => {
-    const obj = [...expenseSummary.value].find((m) => m.id === monthSelected.value);
+    const obj = [...expenseSummary.value].find(
+      (m) => m.id === monthSelected.value
+    );
     const array = [obj.travel, obj.food, obj.rent, obj.other];
-    currentExpenseSummarySum.value = array.reduce((sum, currentValue) => sum + currentValue, 0);
-    return (array);
-  })
+    currentExpenseSummarySum.value = array.reduce(
+      (sum, currentValue) => sum + currentValue,
+      0
+    );
+    return array;
+  });
   return {
     switches,
     toggleActive,
@@ -92,5 +122,6 @@ export const useFinanceStore = defineStore("finance", () => {
     expenseSummary,
     expenseSummaryArray,
     currentExpenseSummarySum,
+    currentBalance,
   };
 });

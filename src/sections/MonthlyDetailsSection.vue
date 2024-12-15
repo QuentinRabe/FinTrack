@@ -1,5 +1,5 @@
 <template>
-  <section class="flex flex-col gap-5 w-[70%] h-full">
+  <section class="flex flex-col gap-5 w-[65%] h-full">
     <div
       class="w-full h-full px-3 py-2 text-lg border rounded-lg flex flex-col"
     >
@@ -18,7 +18,13 @@
       <div class="w-full h-[90%] grid grid-cols-1 items-center">
         <transition name="fade">
           <GraphicBarComponent
-            :key="store.activeBar"
+            :key="
+              store.activeBar +
+              '-' +
+              store.monthlyIncome +
+              '-' +
+              store.monthlyExpenses
+            "
             :monthData="
               store.activeBar === 'Income'
                 ? store.monthlyIncome

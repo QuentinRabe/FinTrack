@@ -1,5 +1,5 @@
 <template>
-  <main class="bg-white w-full h-screen flex px-10 py-5 gap-5">
+  <main class="bg-white w-full h-screen flex items-center px-10 py-5 gap-5">
     <MonthlyDetailsSection/>
     <RightSection/>
   </main>

@@ -1,5 +1,7 @@
 <template>
-  <Doughnut :data="data" :options="chartOptions" class="w-full h-full"/>
+  <div class="w-full h-full flex items-center">
+    <Doughnut :data="data" :options="chartOptions" />
+  </div>
 </template>
 
 <script setup>
@@ -15,10 +17,10 @@ const data = ref({
     {
       data: arrayData,
       backgroundColor: [
-        "rgb(33, 150, 243)", // Bleu vif
-        "rgb(76, 175, 80)", // Vert éclatant
-        "rgb(156, 39, 176)", // Violet vif
-        "rgb(255, 87, 34)", // Orange brûlé
+        "rgb(161, 136, 127)", // Brun taupe
+        "rgb(255, 183, 77)", // Orange ambré
+        "rgb(239, 154, 154)", // Rouge clair
+        "rgb(179, 229, 252)",
       ],
       hoverOffset: 4,
     },
@@ -33,9 +35,9 @@ onMounted(() => {
 const chartOptions = {
   animation: {
     duration: 1000, // Durée de l'animation en millisecondes
-    easing: 'easeInOutBounce', // Type d'animation
+    easing: "easeInOutBounce", // Type d'animation
     onComplete: () => {
-      console.log('Animation terminée');
+      console.log("Animation terminée");
     },
   },
 };
